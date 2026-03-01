@@ -67,14 +67,26 @@
   text-align: center;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
 .title {
   font-weight: 700;
   font-size: 18px;
   line-height: 1.2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.8;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;

@@ -8,6 +8,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { DataService } from '../../../core/data.service';
 import { Procedure } from '../../../core/models';
 
+type ProcedureListItem = Procedure & {
+  specialtyName: string;
+  surgeonName: string;
+};
+
 @Component({
   standalone: true,
   selector: 'app-procedures-page',
@@ -16,35 +21,53 @@ import { Procedure } from '../../../core/models';
   styleUrl: './procedures.page.scss',
 })
 export class ProceduresPage {
-  specialtyId = '';
-  surgeonId = '';
-  specialtyName = '';
-  surgeonName = '';
-  procedures: Procedure[] = [];
+  // If these are null -> we're in global mode (/procedures)
+  specialtyId: string | null = null;
+  surgeonId: string | null = null;
+
+  title = 'Procedures';
+  subtitle = 'Select a procedure to view the preference card.';
+
+  procedures: ProcedureListItem[] = [];
 
   constructor(private route: ActivatedRoute, private router: Router, private data: DataService) {
-    this.specialtyId = this.route.snapshot.paramMap.get('specialtyId') ?? '';
-    this.surgeonId = this.route.snapshot.paramMap.get('surgeonId') ?? '';
+    this.specialtyId = this.route.snapshot.paramMap.get('specialtyId');
+    this.surgeonId = this.route.snapshot.paramMap.get('surgeonId');
 
-    this.specialtyName = this.data.getSpecialties().find(s => s.id === this.specialtyId)?.name ?? 'Specialty';
-    this.surgeonName =
-      this.data.getSurgeonsBySpecialty(this.specialtyId).find(s => s.id === this.surgeonId)?.name ?? 'Surgeon';
+    const raw = this.specialtyId && this.surgeonId
+      ? this.data.getProceduresBySpecialtyAndSurgeon(this.specialtyId, this.surgeonId)
+      : this.data.getAllProcedures();
 
-    this.procedures = this.data.getProceduresBySpecialtyAndSurgeon(this.specialtyId, this.surgeonId);
+    if (this.specialtyId && this.surgeonId) {
+      const surgeonName = this.data.getSurgeonName(this.surgeonId);
+      const specialtyName = this.data.getSpecialtyName(this.specialtyId);
+      this.title = surgeonName;
+      this.subtitle = `${specialtyName} • Select a procedure.`;
+    }
+
+    this.procedures = raw.map(p => ({
+      ...p,
+      specialtyName: this.data.getSpecialtyName(p.specialtyId),
+      surgeonName: this.data.getSurgeonName(p.surgeonId),
+    }));
   }
 
-  openProcedure(p: Procedure) {
+  openProcedure(p: ProcedureListItem) {
     this.router.navigate([
       '/specialties',
-      this.specialtyId,
+      p.specialtyId,
       'surgeons',
-      this.surgeonId,
+      p.surgeonId,
       'procedures',
       p.id,
     ]);
   }
 
   back() {
-    this.router.navigate(['/specialties', this.specialtyId, 'surgeons']);
+    if (this.specialtyId && this.surgeonId) {
+      this.router.navigate(['/specialties', this.specialtyId, 'surgeons']);
+      return;
+    }
+    this.router.navigate(['/dashboard']);
   }
 }

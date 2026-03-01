@@ -4,14 +4,14 @@ import { PreferenceCard, Procedure, Specialty, Surgeon } from './models';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private specialties: Specialty[] = [
-    { id: 'ortho', name: 'Orthopedics', icon: 'personal_injury' },
+    { id: 'ortho', name: 'Orthopedics', icon: 'fitness_center' },
     { id: 'neuro', name: 'Neurosurgery', icon: 'psychology' },
     { id: 'gen', name: 'General Surgery', icon: 'medical_services' },
     { id: 'ent', name: 'ENT', icon: 'hearing' },
 
     { id: 'obgyn', name: 'OB/Gyn', icon: 'pregnant_woman' },
-    { id: 'plastics', name: 'Plastic Surgery', icon: 'auto_fix_high' }, // CHANGED
-    { id: 'cv', name: 'Cardiovascular (CV)', icon: 'favorite' },
+    { id: 'plastics', name: 'Plastic Surgery', icon: 'auto_fix_high' },
+    { id: 'cv', name: 'Cardiovascular (CV)', icon: 'monitor_heart' },
     { id: 'trauma', name: 'Trauma', icon: 'emergency' },
   ];
 
@@ -52,8 +52,17 @@ export class DataService {
     return this.surgeons.filter(s => s.specialtyId === specialtyId);
   }
 
+  getAllSurgeons(): Surgeon[] {
+    return this.surgeons;
+  }
+
   getProceduresBySpecialtyAndSurgeon(specialtyId: string, surgeonId: string): Procedure[] {
     return this.procedures.filter(p => p.specialtyId === specialtyId && p.surgeonId === surgeonId);
+  }
+
+  // NEW (navbar-friendly)
+  getAllProcedures(): Procedure[] {
+    return this.procedures;
   }
 
   getPreferenceCard(specialtyId: string, surgeonId: string, procedureId: string): PreferenceCard | undefined {
@@ -63,5 +72,19 @@ export class DataService {
         c.surgeonId === surgeonId &&
         c.procedureId === procedureId
     );
+  }
+
+  // NEW (navbar-friendly)
+  getAllPreferenceCards(): PreferenceCard[] {
+    return this.cards;
+  }
+
+  // Helpful lookups for labels on the global pages
+  getSpecialtyName(id: string): string {
+    return this.specialties.find(s => s.id === id)?.name ?? 'Specialty';
+  }
+
+  getSurgeonName(id: string): string {
+    return this.surgeons.find(s => s.id === id)?.name ?? 'Surgeon';
   }
 }

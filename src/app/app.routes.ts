@@ -9,6 +9,14 @@ export const routes: Routes = [
 
   { path: 'dashboard', component: DashboardPage },
 
+  // Shows all Surgeons, Procedures, and Pref cards //
+  { path: 'surgeons', component: SurgeonsPage },
+
+  { path: 'procedures', component: ProceduresPage },
+
+  { path: 'preference-cards', component: PreferenceCardPage },
+
+
   // Specialty -> Surgeons
   { path: 'specialties/:specialtyId/surgeons', component: SurgeonsPage },
 

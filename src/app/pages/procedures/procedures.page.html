@@ -1,8 +1,8 @@
 <section class="page">
   <div class="container">
     <header class="page-header">
-      <h1>{{ surgeonName }}</h1>
-      <p>{{ specialtyName }} • Select a procedure.</p>
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
 
       <div class="actions">
         <button mat-stroked-button (click)="back()">Back</button>
@@ -13,6 +13,9 @@
       <mat-card class="card" *ngFor="let p of procedures" (click)="openProcedure(p)">
         <div class="card-inner">
           <div class="title">{{ p.name }}</div>
+          <div class="subtitle" *ngIf="!(specialtyId && surgeonId)">
+            {{ p.surgeonName }} • {{ p.specialtyName }}
+          </div>
         </div>
       </mat-card>
 
