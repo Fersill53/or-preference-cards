@@ -4,10 +4,12 @@
     <p>Select a specialty to view surgeons and preference cards.</p>
   </header>
 
-  <div class="grid">
-    <mat-card class="card" *ngFor="let s of specialties" (click)="openSpecialty(s)">
-      <mat-card-title>{{ s.name }}</mat-card-title>
-      <mat-card-subtitle>Tap to view surgeons</mat-card-subtitle>
-    </mat-card>
+  <div class="grid-wrap">
+    <div class="grid">
+      <mat-card class="card" *ngFor="let s of specialties" (click)="openSpecialty(s)">
+        <mat-card-title>{{ s.name }}</mat-card-title>
+        <mat-card-subtitle>Tap to view surgeons</mat-card-subtitle>
+      </mat-card>
+    </div>
   </div>
 </section>

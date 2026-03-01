@@ -8,6 +8,12 @@ export class DataService {
     { id: 'neuro', name: 'Neurosurgery' },
     { id: 'gen', name: 'General Surgery' },
     { id: 'ent', name: 'ENT' },
+
+    // Added
+    { id: 'obgyn', name: 'OB/Gyn' },
+    { id: 'plastics', name: 'Plastic Surgery' },
+    { id: 'cv', name: 'Cardiovascular (CV)' },
+    { id: 'trauma', name: 'Trauma' },
   ];
 
   private surgeons: Surgeon[] = [

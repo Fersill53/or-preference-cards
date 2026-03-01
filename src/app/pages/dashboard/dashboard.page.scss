@@ -1,5 +1,5 @@
 .page-header {
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 
   h1 {
     margin: 0 0 4px;
@@ -11,14 +11,33 @@
   }
 }
 
-.grid {
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+/* Center the whole grid area */
+.grid-wrap {
+  display: flex;
+  justify-content: center;
 }
 
+/* A centered grid with square-ish cards */
+.grid {
+  width: min(1100px, 100%);
+  display: grid;
+  gap: 16px;
+
+  /* nice responsive columns */
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-items: center;
+}
+
+/* Square-ish Material cards */
 .card {
   cursor: pointer;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1; /* makes them square */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
   transition: transform 120ms ease;
 
   &:hover {
