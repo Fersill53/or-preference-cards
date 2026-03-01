@@ -1,0 +1,51 @@
+<mat-sidenav-container class="shell">
+  <!-- CLOSED by default -->
+  <mat-sidenav
+    #sidenav
+    mode="over"
+    [opened]="false"
+    (click)="closeSidenav()"
+    class="sidenav"
+  >
+    <div class="sidenav-header">
+      <div class="sidenav-title">OR Guide</div>
+      <div class="sidenav-subtitle">Preference Cards</div>
+    </div>
+
+    <mat-nav-list>
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>dashboard</mat-icon>
+        <span matListItemTitle>Dashboard</span>
+      </a>
+
+      <!-- These are "entry points" — user can navigate from dashboard too -->
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>groups</mat-icon>
+        <span matListItemTitle>Surgeons</span>
+      </a>
+
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>assignment</mat-icon>
+        <span matListItemTitle>Procedures</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar" color="primary">
+      <button mat-icon-button (click)="toggleSidenav()" aria-label="Open menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span class="toolbar-title">OR Preference Cards</span>
+
+      <span class="spacer"></span>
+
+      <a mat-button routerLink="/dashboard">Dashboard</a>
+    </mat-toolbar>
+
+    <main class="content">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>
