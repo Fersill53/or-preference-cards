@@ -1,0 +1,44 @@
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+
+  h1 {
+    margin: 0 0 4px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.card {
+  padding: 8px;
+}
+
+.divider {
+  margin: 12px 0;
+}
+
+.section {
+  margin-bottom: 12px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.75;
+  margin-bottom: 4px;
+}
+
+.value {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.empty {
+  opacity: 0.85;
+}

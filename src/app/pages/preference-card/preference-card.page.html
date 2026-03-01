@@ -1,0 +1,52 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>Preference Card</h1>
+      <p *ngIf="card as c">{{ c.procedureName }}</p>
+      <p *ngIf="!card">Card not found</p>
+    </div>
+
+    <button mat-stroked-button (click)="back()">Back</button>
+  </header>
+
+  <mat-card *ngIf="card as c" class="card">
+    <mat-card-title>{{ c.procedureName }}</mat-card-title>
+    <mat-card-subtitle>Quick reference</mat-card-subtitle>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="section">
+      <div class="label">Positioning</div>
+      <div class="value">{{ c.positioning }}</div>
+    </div>
+
+    <div class="section">
+      <div class="label">Prep</div>
+      <div class="value">{{ c.prep }}</div>
+    </div>
+
+    <div class="section">
+      <div class="label">Antibiotics</div>
+      <div class="value">{{ c.antibiotics }}</div>
+    </div>
+
+    <div class="section">
+      <div class="label">Instruments</div>
+      <mat-chip-set>
+        <mat-chip *ngFor="let i of c.instruments">{{ i }}</mat-chip>
+      </mat-chip-set>
+    </div>
+
+    <div class="section">
+      <div class="label">Notes</div>
+      <div class="value">{{ c.notes }}</div>
+    </div>
+  </mat-card>
+
+  <mat-card *ngIf="!card" class="card empty">
+    <mat-card-title>No preference card data</mat-card-title>
+    <mat-card-subtitle>
+      Add it in <code>DataService</code> for now — later we’ll replace with real storage.
+    </mat-card-subtitle>
+  </mat-card>
+</section>

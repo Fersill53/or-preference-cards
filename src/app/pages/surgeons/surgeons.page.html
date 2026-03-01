@@ -1,0 +1,22 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <h1>{{ specialtyName }}</h1>
+      <p>Choose a surgeon.</p>
+    </div>
+
+    <button mat-stroked-button (click)="back()">Back</button>
+  </header>
+
+  <div class="grid">
+    <mat-card class="card" *ngFor="let s of surgeons" (click)="openSurgeon(s)">
+      <mat-card-title>{{ s.name }}</mat-card-title>
+      <mat-card-subtitle>Tap to view procedures</mat-card-subtitle>
+    </mat-card>
+
+    <mat-card class="empty" *ngIf="surgeons.length === 0">
+      <mat-card-title>No surgeons found</mat-card-title>
+      <mat-card-subtitle>Add some to your data source</mat-card-subtitle>
+    </mat-card>
+  </div>
+</section>

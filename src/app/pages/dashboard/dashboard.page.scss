@@ -1,0 +1,27 @@
+.page-header {
+  margin-bottom: 12px;
+
+  h1 {
+    margin: 0 0 4px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.card {
+  cursor: pointer;
+  transition: transform 120ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
