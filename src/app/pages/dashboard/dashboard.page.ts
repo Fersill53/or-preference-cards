@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 import { DataService } from '../../../core/data.service';
 import { Specialty } from '../../../core/models';
@@ -10,7 +11,7 @@ import { Specialty } from '../../../core/models';
 @Component({
   standalone: true,
   selector: 'app-dashboard-page',
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './dashboard.page.html',
   styleUrl: './dashboard.page.scss',
 })

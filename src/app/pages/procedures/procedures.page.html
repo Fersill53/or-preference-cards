@@ -1,22 +1,26 @@
 <section class="page">
-  <header class="page-header">
-    <div>
+  <div class="container">
+    <header class="page-header">
       <h1>{{ surgeonName }}</h1>
-      <p>{{ specialtyName }} • Choose a procedure.</p>
+      <p>{{ specialtyName }} • Select a procedure.</p>
+
+      <div class="actions">
+        <button mat-stroked-button (click)="back()">Back</button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <mat-card class="card" *ngFor="let p of procedures" (click)="openProcedure(p)">
+        <div class="card-inner">
+          <div class="title">{{ p.name }}</div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card empty" *ngIf="procedures.length === 0">
+        <div class="card-inner">
+          <div class="title">No procedures yet</div>
+        </div>
+      </mat-card>
     </div>
-
-    <button mat-stroked-button (click)="back()">Back</button>
-  </header>
-
-  <div class="grid">
-    <mat-card class="card" *ngFor="let p of procedures" (click)="openProcedure(p)">
-      <mat-card-title>{{ p.name }}</mat-card-title>
-      <mat-card-subtitle>Tap to view preference card</mat-card-subtitle>
-    </mat-card>
-
-    <mat-card class="empty" *ngIf="procedures.length === 0">
-      <mat-card-title>No procedures found</mat-card-title>
-      <mat-card-subtitle>Add some to your data source</mat-card-subtitle>
-    </mat-card>
   </div>
 </section>

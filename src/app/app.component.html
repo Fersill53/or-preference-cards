@@ -1,5 +1,4 @@
 <mat-sidenav-container class="shell">
-  <!-- CLOSED by default -->
   <mat-sidenav
     #sidenav
     mode="over"
@@ -27,6 +26,12 @@
         <mat-icon matListItemIcon>assignment</mat-icon>
         <span matListItemTitle>Procedures</span>
       </a>
+
+      <!-- NEW -->
+      <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
+        <mat-icon matListItemIcon>description</mat-icon>
+        <span matListItemTitle>Preference Cards</span>
+      </a>
     </mat-nav-list>
   </mat-sidenav>
 
@@ -37,9 +42,7 @@
       </button>
 
       <span class="toolbar-title">OR Preference Cards</span>
-
       <span class="spacer"></span>
-      <!-- Removed the top-right Dashboard button -->
     </mat-toolbar>
 
     <main class="content">

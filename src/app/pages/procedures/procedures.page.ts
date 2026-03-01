@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +11,7 @@ import { Procedure } from '../../../core/models';
 @Component({
   standalone: true,
   selector: 'app-procedures-page',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './procedures.page.html',
   styleUrl: './procedures.page.scss',
 })
@@ -26,7 +27,8 @@ export class ProceduresPage {
     this.surgeonId = this.route.snapshot.paramMap.get('surgeonId') ?? '';
 
     this.specialtyName = this.data.getSpecialties().find(s => s.id === this.specialtyId)?.name ?? 'Specialty';
-    this.surgeonName = this.data.getSurgeonsBySpecialty(this.specialtyId).find(s => s.id === this.surgeonId)?.name ?? 'Surgeon';
+    this.surgeonName =
+      this.data.getSurgeonsBySpecialty(this.specialtyId).find(s => s.id === this.surgeonId)?.name ?? 'Surgeon';
 
     this.procedures = this.data.getProceduresBySpecialtyAndSurgeon(this.specialtyId, this.surgeonId);
   }

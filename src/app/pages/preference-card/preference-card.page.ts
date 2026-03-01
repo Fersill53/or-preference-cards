@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -12,7 +13,7 @@ import { PreferenceCard } from '../../../core/models';
 @Component({
   standalone: true,
   selector: 'app-preference-card-page',
-  imports: [MatCardModule, MatButtonModule, MatDividerModule, MatChipsModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDividerModule, MatChipsModule],
   templateUrl: './preference-card.page.html',
   styleUrl: './preference-card.page.scss',
 })

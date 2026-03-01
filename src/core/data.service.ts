@@ -4,16 +4,15 @@ import { PreferenceCard, Procedure, Specialty, Surgeon } from './models';
 @Injectable({ providedIn: 'root' })
 export class DataService {
   private specialties: Specialty[] = [
-    { id: 'ortho', name: 'Orthopedics' },
-    { id: 'neuro', name: 'Neurosurgery' },
-    { id: 'gen', name: 'General Surgery' },
-    { id: 'ent', name: 'ENT' },
+    { id: 'ortho', name: 'Orthopedics', icon: 'personal_injury' },
+    { id: 'neuro', name: 'Neurosurgery', icon: 'psychology' },
+    { id: 'gen', name: 'General Surgery', icon: 'medical_services' },
+    { id: 'ent', name: 'ENT', icon: 'hearing' },
 
-    // Added
-    { id: 'obgyn', name: 'OB/Gyn' },
-    { id: 'plastics', name: 'Plastic Surgery' },
-    { id: 'cv', name: 'Cardiovascular (CV)' },
-    { id: 'trauma', name: 'Trauma' },
+    { id: 'obgyn', name: 'OB/Gyn', icon: 'pregnant_woman' },
+    { id: 'plastics', name: 'Plastic Surgery', icon: 'auto_fix_high' }, // CHANGED
+    { id: 'cv', name: 'Cardiovascular (CV)', icon: 'favorite' },
+    { id: 'trauma', name: 'Trauma', icon: 'emergency' },
   ];
 
   private surgeons: Surgeon[] = [

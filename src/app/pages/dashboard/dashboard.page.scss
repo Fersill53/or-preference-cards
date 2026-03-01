@@ -1,3 +1,8 @@
+/*
+.page {
+    padding-top: 40px;
+}
+
 .page-header {
   margin-bottom: 16px;
 
@@ -11,36 +16,150 @@
   }
 }
 
-/* Center the whole grid area */
+/* Center the whole grid area 
 .grid-wrap {
   display: flex;
   justify-content: center;
 }
 
-/* A centered grid with square-ish cards */
+/* Centered grid 
 .grid {
   width: min(1100px, 100%);
   display: grid;
   gap: 16px;
-
-  /* nice responsive columns */
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   justify-items: center;
 }
 
-/* Square-ish Material cards */
+/* Square cards 
 .card {
   cursor: pointer;
   width: 100%;
   max-width: 260px;
-  aspect-ratio: 1 / 1; /* makes them square */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  aspect-ratio: 1 / 1;
+  border-radius: 16px; /* rounded corners 
+  overflow: hidden; /* keeps rounded corners clean 
+  display: grid;
+  place-items: center; /* centers content box 
 
   transition: transform 120ms ease;
 
   &:hover {
     transform: translateY(-2px);
   }
+}
+
+/* Center all text perfectly 
+.card-inner {
+  width: 100%;
+  padding: 18px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Title that stays tidy d
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+
+  /* keeps big titles from breaking the card layout 
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Subtitle centered and subtle 
+.subtitle {
+  font-size: 13px;
+  line-height: 1.2;
+  opacity: 0.8;
+}
+  */
+
+/* add these two blocks anywhere */
+.page {
+  padding-top: 28px;
+}
+
+.container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-items: center;
+}
+
+.card {
+  cursor: pointer;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  transition: transform 120ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.card-inner {
+  width: 100%;
+  padding: 18px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.icon {
+  font-size: 44px;
+  width: 44px;
+  height: 44px;
+  line-height: 44px;
+  opacity: 0.9;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

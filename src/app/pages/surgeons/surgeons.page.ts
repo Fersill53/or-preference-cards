@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +11,7 @@ import { Surgeon, Specialty } from '../../../core/models';
 @Component({
   standalone: true,
   selector: 'app-surgeons-page',
-  imports: [MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatCardModule, MatButtonModule],
   templateUrl: './surgeons.page.html',
   styleUrl: './surgeons.page.scss',
 })

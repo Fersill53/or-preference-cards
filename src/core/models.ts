@@ -1,6 +1,7 @@
 export type Specialty = {
   id: string;
   name: string;
+  icon: string; // keep icons
 };
 
 export type Surgeon = {

@@ -1,3 +1,4 @@
+<!--
 <section class="page">
   <header class="page-header">
     <h1>Dashboard</h1>
@@ -7,8 +8,29 @@
   <div class="grid-wrap">
     <div class="grid">
       <mat-card class="card" *ngFor="let s of specialties" (click)="openSpecialty(s)">
-        <mat-card-title>{{ s.name }}</mat-card-title>
-        <mat-card-subtitle>Tap to view surgeons</mat-card-subtitle>
+        <div class="card-inner">
+          <div class="title">{{ s.name }}</div>
+          <div class="subtitle">Tap to view surgeons</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>
+-->
+
+<section class="page">
+  <div class="container">
+    <header class="page-header">
+      <h1>Dashboard</h1>
+      <p>Select a specialty to view surgeons and preference cards.</p>
+    </header>
+
+    <div class="grid">
+      <mat-card class="card" *ngFor="let s of specialties" (click)="openSpecialty(s)">
+        <div class="card-inner">
+          <mat-icon class="icon">{{ s.icon }}</mat-icon>
+          <div class="title">{{ s.name }}</div>
+        </div>
       </mat-card>
     </div>
   </div>
