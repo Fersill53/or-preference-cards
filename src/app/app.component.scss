@@ -2,10 +2,20 @@
   height: 100dvh;
 }
 
+.menu-btn {
+    color: ghostwhite;
+}
+
+.menu-btn mat-icon {
+    color: ghostwhite !important;
+}
+
 .toolbar {
   position: sticky;
   top: 0;
   z-index: 10;
+  color: #E75925;
+  background-color: #092240;
 }
 
 .toolbar-title {
@@ -23,6 +33,8 @@
 
 .sidenav {
   width: 280px;
+  background-color: #092240;
+  color: ghostwhite;
 }
 
 .sidenav-header {
@@ -41,4 +53,32 @@
 
 .active-link {
   font-weight: 700;
+}
+
+/* ✅ FORCE Material nav text + icons to ghostwhite (MDC-based Angular Material) */
+::ng-deep .sidenav-nav .mdc-list-item__primary-text,
+::ng-deep .sidenav-nav .mdc-list-item__secondary-text,
+::ng-deep .sidenav-nav .mdc-list-item__content,
+::ng-deep .sidenav-nav .mat-mdc-list-item .mdc-list-item__content {
+  color: ghostwhite !important;
+}
+
+/* icons */
+::ng-deep .sidenav-nav .mat-mdc-list-item mat-icon,
+::ng-deep .sidenav-nav .mat-mdc-list-item .mat-icon {
+  color: ghostwhite !important;
+}
+
+/* optional: improve icon opacity/contrast */
+::ng-deep .sidenav-nav .mat-mdc-list-item mat-icon {
+  opacity: 0.95;
+}
+
+/* hover/active backgrounds (optional but nice) */
+::ng-deep .sidenav-nav .mat-mdc-list-item:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+::ng-deep .sidenav-nav a.active-link {
+  background: rgba(255, 255, 255, 0.18) !important;
 }

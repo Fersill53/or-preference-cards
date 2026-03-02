@@ -25,6 +25,12 @@
   margin-top: 14px;
   display: flex;
   justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  button mat-icon {
+    margin-right: 6px;
+  }
 }
 
 .grid {
@@ -53,7 +59,6 @@
   }
 }
 
-/* For the empty-state card (no hover/click feel) */
 .card.empty {
   cursor: default;
 
@@ -64,12 +69,17 @@
 
 .card-inner {
   width: 100%;
+  height: 100%;
   padding: 18px;
   text-align: center;
 
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 12px;
+
+  position: relative;
 }
 
 .title {
@@ -81,4 +91,16 @@
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  padding: 0 6px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 6px;
+
+  /* Keeps the action buttons neat and consistent */
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
 }

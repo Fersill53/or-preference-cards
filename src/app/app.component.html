@@ -11,7 +11,7 @@
       <div class="sidenav-subtitle">Preference Cards</div>
     </div>
 
-    <mat-nav-list>
+    <mat-nav-list class="sidenav-nav">
       <a mat-list-item routerLink="/dashboard" routerLinkActive="active-link">
         <mat-icon matListItemIcon>dashboard</mat-icon>
         <span matListItemTitle>Dashboard</span>
@@ -37,7 +37,7 @@
 
   <mat-sidenav-content>
     <mat-toolbar class="toolbar" color="primary">
-      <button mat-icon-button (click)="toggleSidenav()" aria-label="Open menu">
+      <button mat-icon-button class="menu-btn" (click)="toggleSidenav()" aria-label="Open menu">
         <mat-icon>menu</mat-icon>
       </button>
 

@@ -1,6 +1,7 @@
+<!--
 <section class="page">
   <div class="container">
-    <!-- LIST MODE: /preference-cards -->
+     LIST MODE: /preference-cards -
     <ng-container *ngIf="!isDetailMode; else detailMode">
       <header class="page-header">
         <h1>Preference Cards</h1>
@@ -27,7 +28,7 @@
       </div>
     </ng-container>
 
-    <!-- DETAIL MODE: /specialties/:specialtyId/surgeons/:surgeonId/procedures/:procedureId -->
+    < DETAIL MODE: /specialties/:specialtyId/surgeons/:surgeonId/procedures/:procedureId 
     <ng-template #detailMode>
       <header class="page-header">
         <h1>Preference Card</h1>
@@ -76,6 +77,119 @@
       <mat-card *ngIf="!card" class="detail-card empty">
         <mat-card-title>No preference card data</mat-card-title>
         <mat-card-subtitle>Add it in <code>DataService</code> for now.</mat-card-subtitle>
+      </mat-card>
+    </ng-template>
+  </div>
+</section>
+-->
+
+<section class="page">
+  <div class="container">
+    <!-- LIST MODE: /preference-cards -->
+    <ng-container *ngIf="!isDetailMode; else detailMode">
+      <header class="page-header">
+        <h1>Preference Cards</h1>
+        <p>Select a card to open details.</p>
+
+        <div class="actions">
+          <button mat-stroked-button (click)="back()">Back</button>
+
+          <button mat-stroked-button (click)="toggleManage()">
+            <mat-icon>settings</mat-icon>
+            <span>{{ manageMode ? 'Done' : 'Manage' }}</span>
+          </button>
+
+          <button mat-flat-button color="primary" (click)="addCard()">
+            <mat-icon>add</mat-icon>
+            <span>Add</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <mat-card class="card" *ngFor="let c of cards" (click)="openCard(c)">
+          <div class="card-inner">
+            <div class="title">{{ c.procedureName }}</div>
+            <div class="subtitle">{{ c.surgeonName }} • {{ c.specialtyName }}</div>
+
+            <div class="card-actions" *ngIf="manageMode">
+              <button mat-icon-button (click)="editCardFromList(c, $event)" aria-label="Edit preference card">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button (click)="deleteCardFromList(c, $event)" aria-label="Delete preference card">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </div>
+        </mat-card>
+
+        <mat-card class="card empty" *ngIf="cards.length === 0">
+          <div class="card-inner">
+            <div class="title">No preference cards yet</div>
+          </div>
+        </mat-card>
+      </div>
+    </ng-container>
+
+    <!-- DETAIL MODE -->
+    <ng-template #detailMode>
+      <header class="page-header">
+        <h1>Preference Card</h1>
+        <p *ngIf="card as c">{{ c.procedureName }}</p>
+        <p *ngIf="!card">Card not found</p>
+
+        <div class="actions">
+          <button mat-stroked-button (click)="back()">Back</button>
+
+          <button mat-stroked-button (click)="editCard()" *ngIf="card">
+            <mat-icon>edit</mat-icon>
+            <span>Edit</span>
+          </button>
+
+          <button mat-stroked-button (click)="deleteCard()" *ngIf="card">
+            <mat-icon>delete</mat-icon>
+            <span>Delete</span>
+          </button>
+        </div>
+      </header>
+
+      <mat-card *ngIf="card as c" class="detail-card">
+        <mat-card-title>{{ c.procedureName }}</mat-card-title>
+        <mat-card-subtitle>Quick reference</mat-card-subtitle>
+
+        <mat-divider class="divider"></mat-divider>
+
+        <div class="section">
+          <div class="label">Positioning</div>
+          <div class="value">{{ c.positioning }}</div>
+        </div>
+
+        <div class="section">
+          <div class="label">Prep</div>
+          <div class="value">{{ c.prep }}</div>
+        </div>
+
+        <div class="section">
+          <div class="label">Antibiotics</div>
+          <div class="value">{{ c.antibiotics }}</div>
+        </div>
+
+        <div class="section">
+          <div class="label">Instruments</div>
+          <mat-chip-set>
+            <mat-chip *ngFor="let i of c.instruments">{{ i }}</mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="section">
+          <div class="label">Notes</div>
+          <div class="value">{{ c.notes }}</div>
+        </div>
+      </mat-card>
+
+      <mat-card *ngIf="!card" class="detail-card empty">
+        <mat-card-title>No preference card data</mat-card-title>
+        <mat-card-subtitle>Add it from the Preference Cards page.</mat-card-subtitle>
       </mat-card>
     </ng-template>
   </div>
