@@ -25,7 +25,7 @@
     </div>
   </div>
 </section>
--->
+--
 
 <section class="page">
   <div class="container">
@@ -58,6 +58,65 @@
               <mat-icon>edit</mat-icon>
             </button>
             <button mat-icon-button (click)="deleteSurgeon(s, $event)" aria-label="Delete surgeon">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card class="card empty" *ngIf="surgeons.length === 0">
+        <div class="card-inner">
+          <div class="title">No surgeons yet</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>
+-->
+
+<section class="page">
+  <div class="container">
+    <header class="page-header">
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
+
+      <div class="actions">
+        <button mat-stroked-button (click)="back()">Back</button>
+
+        <button mat-stroked-button (click)="toggleManage()">
+          <mat-icon>settings</mat-icon>
+          <span>{{ manageMode ? 'Done' : 'Manage' }}</span>
+        </button>
+
+        <button mat-flat-button color="primary" (click)="addSurgeon()">
+          <mat-icon>add</mat-icon>
+          <span>Add</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <mat-card class="card" *ngFor="let s of surgeons" (click)="openSurgeon(s)">
+        <div class="card-inner">
+          <div class="title">{{ s.name }}</div>
+
+          <!-- ✅ This is the only switch -->
+          <div class="card-actions" *ngIf="manageMode">
+            <button
+              mat-icon-button
+              type="button"
+              (click)="editSurgeon(s, $event)"
+              aria-label="Edit surgeon"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              type="button"
+              (click)="deleteSurgeon(s, $event)"
+              aria-label="Delete surgeon"
+            >
               <mat-icon>delete</mat-icon>
             </button>
           </div>

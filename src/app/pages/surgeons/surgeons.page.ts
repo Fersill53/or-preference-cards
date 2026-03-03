@@ -256,6 +256,7 @@ export class SurgeonsPage {
 
   toggleManage() {
     this.manageMode = !this.manageMode;
+    console.log('manageMode:', this.manageMode)
   }
 
   openSurgeon(surgeon: Surgeon) {
