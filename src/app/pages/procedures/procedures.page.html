@@ -81,7 +81,7 @@
   </div>
 </section>
 -->
-
+<!--
 <section class="page">
   <div class="container">
     <header class="page-header">
@@ -103,12 +103,12 @@
         <div class="card-inner">
           <div class="title">{{ p.name }}</div>
 
-          <!-- Only show context subtitle when viewing /procedures -->
+          <- Only show context subtitle when viewing /procedures 
           <div class="subtitle" *ngIf="!(specialtyId && surgeonId)">
             {{ p.surgeonName }} • {{ p.specialtyName }}
           </div>
 
-          <!-- ✅ QUICK CREATE button when there is NO preference card yet -->
+          -- ✅ QUICK CREATE button when there is NO preference card yet -
           <button
             class="quick-card-btn"
             mat-icon-button
@@ -118,6 +118,74 @@
           >
             <mat-icon>note_add</mat-icon>
           </button>
+        </div>
+      </mat-card>
+
+      <mat-card class="card empty" *ngIf="procedures.length === 0">
+        <div class="card-inner">
+          <div class="title">No procedures yet</div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</section>
+-->
+
+<!--  CHANGES 4/20/26 -->
+
+<section class="page">
+  <div class="container">
+    <header class="page-header">
+      <h1>{{ title }}</h1>
+      <p>{{ subtitle }}</p>
+
+      <div class="actions">
+        <button mat-stroked-button (click)="back()">Back</button>
+
+        <button mat-stroked-button type="button" (click)="toggleManage()">
+          <mat-icon>settings</mat-icon>
+          <span>{{ manageMode ? 'Done' : 'Manage' }}</span>
+        </button>
+
+        <!-- ✅ Add Procedure button is back -->
+        <button mat-flat-button color="primary" type="button" (click)="addProcedure()">
+          <mat-icon>add</mat-icon>
+          <span>Add</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="grid">
+      <mat-card class="card" *ngFor="let p of procedures" (click)="openProcedure(p)">
+        <div class="card-inner">
+          <div class="title">{{ p.name }}</div>
+
+          <!-- Only show context subtitle when viewing /procedures -->
+          <div class="subtitle" *ngIf="!(specialtyId && surgeonId)">
+            {{ p.surgeonName }} • {{ p.specialtyName }}
+          </div>
+
+          <!-- ✅ Quick create preference card (only if missing) -->
+          <button
+            class="quick-card-btn"
+            mat-icon-button
+            type="button"
+            *ngIf="!p.hasCard"
+            (click)="quickAddCard(p, $event)"
+            aria-label="Create preference card"
+          >
+            <mat-icon>note_add</mat-icon>
+          </button>
+
+          <!-- ✅ Manage buttons -->
+          <div class="card-actions" *ngIf="manageMode">
+            <button mat-icon-button type="button" (click)="editProcedure(p, $event)" aria-label="Edit procedure">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button type="button" (click)="deleteProcedure(p, $event)" aria-label="Delete procedure">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
         </div>
       </mat-card>
 

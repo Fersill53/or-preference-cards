@@ -1,3 +1,4 @@
+/*
 .page {
   padding-top: 28px;
 }
@@ -120,4 +121,143 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
+}
+*/
+
+// Changes 4/20/26
+
+.page {
+  padding-top: 28px;
+}
+
+.container {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0 0 6px;
+  }
+
+  p {
+    margin: 0;
+    opacity: 0.8;
+  }
+}
+
+.actions {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  button mat-icon {
+    margin-right: 6px;
+  }
+}
+
+.grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  justify-items: center;
+}
+
+.card {
+  cursor: pointer;
+  width: 100%;
+  max-width: 260px;
+  aspect-ratio: 1 / 1;
+
+  border-radius: 16px;
+  overflow: hidden;
+
+  display: grid;
+  place-items: center;
+
+  transition: transform 120ms ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.card.empty {
+  cursor: default;
+
+  &:hover {
+    transform: none;
+  }
+}
+
+.card-inner {
+  width: 100%;
+  height: 100%;
+  padding: 18px;
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  position: relative;
+}
+
+.title {
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.2;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  padding: 0 6px;
+}
+
+.subtitle {
+  font-size: 13px;
+  opacity: 0.8;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  padding: 0 8px;
+}
+
+/* Manage edit/delete */
+.card-actions {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.88);
+}
+
+/* Quick add preference card */
+.quick-card-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 10;
+
+  padding: 4px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.88);
 }
