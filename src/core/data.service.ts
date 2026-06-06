@@ -144,6 +144,7 @@ export class DataService {
           procedureName: 'Total Knee Arthroplasty',
           notes: 'Tourniquet. Cemented. Keep extra #10 blades.',
           instruments: ['Basic Ortho', 'TKA System', 'Pulsavac', 'Cement Bowl + Gun'],
+          onMayo: [''],
           positioning: 'Supine, bump under hip, well leg padded.',
           prep: 'Chloraprep full leg to high thigh.',
           antibiotics: 'Ancef 2g (or per allergy).',
