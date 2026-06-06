@@ -176,7 +176,7 @@ type PrefDialogData = {
         </mat-form-field>
 
         <mat-form-field appearance="outline">
-          <mat-label>Instruments (one per line)</mat-label>
+          <mat-label>Instrument Sets (one per line)</mat-label>
           <textarea matInput rows="5" formControlName="instrumentsText"></textarea>
         </mat-form-field>
 
