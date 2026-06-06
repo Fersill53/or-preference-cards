@@ -223,6 +223,7 @@ export class PreferenceCardDialogComponent {
       prep: [''],
       antibiotics: [''],
       instrumentsText: [''],
+      onMayoText: [''],
       notes: [''],
     });
 
@@ -251,6 +252,7 @@ export class PreferenceCardDialogComponent {
         prep: data.card.prep,
         antibiotics: data.card.antibiotics,
         instrumentsText: (data.card.instruments ?? []).join('\n'),
+        onMayoText: (data.card.onMayo ?? []).join('\n'),
         notes: data.card.notes,
       });
     }
@@ -316,6 +318,11 @@ export class PreferenceCardDialogComponent {
       .map((x: string) => x.trim())
       .filter((x: string) => !!x);
 
+    const onMayo = (v.onMayoText ?? '')
+      .split('\n')
+      .map((x: string) => x.trim())
+      .filter((x: string) => !!x);
+
     // Get procedure name for display
     const proc = this.data.procedures.find(p => p.id === v.procedureId);
 
@@ -328,6 +335,7 @@ export class PreferenceCardDialogComponent {
       prep: v.prep ?? '',
       antibiotics: v.antibiotics ?? '',
       instruments,
+      onMayo,
       notes: v.notes ?? '',
     } satisfies PreferenceCard);
   }

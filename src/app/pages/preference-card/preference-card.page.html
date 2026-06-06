@@ -182,6 +182,13 @@
         </div>
 
         <div class="section">
+          <div class="label">On Mayo</div>
+          <mat-chip-set>
+            <mat-chip *ngFor="let i of c.onMayo">{{ i }}</mat-chip>
+          </mat-chip-set>
+        </div>
+
+        <div class="section">
           <div class="label">Notes</div>
           <div class="value">{{ c.notes }}</div>
         </div>
