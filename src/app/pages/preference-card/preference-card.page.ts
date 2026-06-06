@@ -181,6 +181,11 @@ type PrefDialogData = {
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>On Mayo (one per line)</mat-label>
+          <textarea matInput rows="5" formControlName="onMayoText"></textarea>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Notes</mat-label>
           <textarea matInput rows="4" formControlName="notes"></textarea>
         </mat-form-field>
