@@ -26,6 +26,7 @@ export type PreferenceCard = {
   instruments: string[];
   onMayo: string[];
   positioning: string;
+  sutures: string[];
   prep: string;
   antibiotics: string;
 };

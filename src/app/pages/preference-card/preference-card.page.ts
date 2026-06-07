@@ -87,7 +87,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatFormFieldModule, MatFormField, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
@@ -186,6 +186,15 @@ type PrefDialogData = {
         </mat-form-field>
 
         <mat-form-field appearance="outline">
+          <mat-label>Sutures</mat-label>
+          <mat-select formControlName="sutures"  multiple>
+            <mat-option *ngFor="let s of SUTURE_OPTIONS" [value]="s">
+              {{ s }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
           <mat-label>Notes</mat-label>
           <textarea matInput rows="4" formControlName="notes"></textarea>
         </mat-form-field>
@@ -210,6 +219,41 @@ export class PreferenceCardDialogComponent {
   filteredSurgeons: Surgeon[] = [];
   filteredProcedures: Procedure[] = [];
 
+  readonly SUTURE_OPTIONS: string[] = [
+    'Ethibond #5',
+    'Ethibond #2',
+    'Monocryl 2-0',
+    'Monocryl 3-0',
+    'Monocryl 4-0',
+    'PDS 1',
+    'PDS 0',
+    'PDS 2-0',
+    'PDS 3-0',
+    'Nylon 0',
+    'Nylon 2-0',
+    'Nylon 3-0',
+    'Nylon 4-0',
+    'Prolene 0',
+    'Prolene 2-0',
+    'Prolene 3-0',
+    'Prolene 4-0',
+    'Silk Ties 0',
+    'Silk Ties 2-0',
+    'Silk Ties 3-0',
+    'Silk 0',
+    'Silk 2-0',
+    'Silk 3-0',
+    'Stratafix 1',
+    'Stratafix 0',
+    'Stratafix 2-0',
+    'Stratafix 3-0',
+    'Stratafix 4-0',
+    'Vicryl 0',
+    'Vicryl 2-0',
+    'Vicryl 3-0',
+    'Vicryl 4-0',
+  ]
+
   constructor(
     private fb: FormBuilder,
     private dialogRef: MatDialogRef<PreferenceCardDialogComponent>,
@@ -224,6 +268,7 @@ export class PreferenceCardDialogComponent {
       antibiotics: [''],
       instrumentsText: [''],
       onMayoText: [''],
+      sutures: [[]],
       notes: [''],
     });
 
@@ -253,6 +298,7 @@ export class PreferenceCardDialogComponent {
         antibiotics: data.card.antibiotics,
         instrumentsText: (data.card.instruments ?? []).join('\n'),
         onMayoText: (data.card.onMayo ?? []).join('\n'),
+        sutures: (data.card.sutures ?? []),
         notes: data.card.notes,
       });
     }
@@ -336,6 +382,7 @@ export class PreferenceCardDialogComponent {
       antibiotics: v.antibiotics ?? '',
       instruments,
       onMayo,
+      sutures: (v.sutures ?? []),
       notes: v.notes ?? '',
     } satisfies PreferenceCard);
   }
@@ -357,7 +404,9 @@ type CardListItem = PreferenceCard & {
     MatChipsModule,
     MatDialogModule,
     MatIconModule,
-  ],
+    MatFormField,
+    MatLabel
+],
   templateUrl: './preference-card.page.html',
   styleUrl: './preference-card.page.scss',
 })

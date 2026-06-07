@@ -188,6 +188,14 @@
           </mat-chip-set>
         </div>
 
+        // Sutures
+        <div class="section">
+          <div class="label">Sutures</div>
+          <mat-chip-set>
+            <mat-chip *ngFor="let s of (c.sutures ?? [])">{{ s }}</mat-chip>
+          </mat-chip-set>
+        </div>
+      
         <div class="section">
           <div class="label">Notes</div>
           <div class="value">{{ c.notes }}</div>
