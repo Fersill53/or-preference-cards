@@ -17,16 +17,28 @@ export type Procedure = {
   name: string;
 };
 
+export type SutureEntry = {
+  suture: string; //e.g. "Vicryl 2-0"
+  needle: string; //e.g. "CT-1"
+  qty?: number; //optional
+  notes?: string; //optional
+}
+
 export type PreferenceCard = {
   specialtyId: string;
   surgeonId: string;
   procedureId: string;
   procedureName: string;
+
   notes: string;
+
   instruments: string[];
   onMayo: string[];
+
   positioning: string;
-  sutures: string[];
+
+  sutures: SutureEntry[];
+
   prep: string;
   antibiotics: string;
 };

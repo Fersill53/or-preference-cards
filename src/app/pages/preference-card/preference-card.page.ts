@@ -91,7 +91,7 @@ import { MatFormFieldModule, MatFormField, MatLabel } from '@angular/material/fo
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 
 import { DataService } from '../../../core/data.service';
 import { PreferenceCard, Procedure, Specialty, Surgeon } from '../../../core/models';
@@ -185,14 +185,40 @@ type PrefDialogData = {
           <textarea matInput rows="5" formControlName="onMayoText"></textarea>
         </mat-form-field>
 
-        <mat-form-field appearance="outline">
-          <mat-label>Sutures</mat-label>
-          <mat-select formControlName="sutures"  multiple>
-            <mat-option *ngFor="let s of SUTURE_OPTIONS" [value]="s">
-              {{ s }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+        <div class="sutures-header">
+          <div class="sutures-title">Sutures</div>
+          <button mat-stroked-button type="button" (click)="addSutureRow()">
+            <mat-icon>add</mat-icon>
+            Add Suture
+          </button>
+        </div>
+
+        <div class="suture-rows" formArrayName="sutures">
+          <div class="suture-row" *ngFor="let row of suturesArray.controls; let i = index" [formGroupName]="i">
+            <mat-form-field appearance="outline">
+              <mat-label>Suture</mat-label>
+              <mat-select formControlName="suture">
+                <mat-option *ngFor="let s of SUTURE_OPTIONS" [value]="s">{{ s }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+              <mat-label>Needle</mat-label>
+              <mat-select formControlName="needle">
+                <mat-option *ngFor="let n of NEEDLE_OPTIONS" [value]="n">{{ n }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="notes">
+              <mat-label>Notes</mat-label>
+              <input matInput formControlName="notes" />
+            </mat-form-field>
+
+            <button mat-icon-button type="button" (click)="removeSutureRow(i)" aria-label="Remove Suture Row">
+              <mat-icon>Close</mat-icon>
+            </button>
+          </div>
+        </div>
 
         <mat-form-field appearance="outline">
           <mat-label>Notes</mat-label>
@@ -211,6 +237,10 @@ type PrefDialogData = {
   styles: [`
     .dialog-content { padding-top: 6px; }
     .form { display: grid; gap: 12px; min-width: 340px; }
+    .sutures-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+    .sutures-title { font-weight: 700; }
+    .suture-row { display: grid; gap: 10px; }
+    .suture-row .notes { grid-column: 4 / 5; }
   `],
 })
 export class PreferenceCardDialogComponent {
@@ -219,40 +249,44 @@ export class PreferenceCardDialogComponent {
   filteredSurgeons: Surgeon[] = [];
   filteredProcedures: Procedure[] = [];
 
+  get suturesArray(): FormArray {
+    return this.form.get('sutures') as FormArray;
+  }
+
+  private createSutureRow(value?: { suture?: string; needle?: string; qty?: number; notes?: string }) {
+    return this.fb.group({
+      suture: [value?.suture ?? '', Validators.required],
+      needle: [value?.needle ?? '', Validators.required],
+      qty: [value?.qty ?? null],
+      notes: [value?.notes ?? ''],
+    });
+  }
+
+  addSutureRow() {
+    this.suturesArray.push(this.createSutureRow());
+  }
+
+  removeSutureRow(index: number) {
+    this.suturesArray.removeAt(index);
+  }
+
   readonly SUTURE_OPTIONS: string[] = [
-    'Ethibond #5',
-    'Ethibond #2',
-    'Monocryl 2-0',
-    'Monocryl 3-0',
-    'Monocryl 4-0',
-    'PDS 1',
-    'PDS 0',
-    'PDS 2-0',
-    'PDS 3-0',
-    'Nylon 0',
-    'Nylon 2-0',
-    'Nylon 3-0',
-    'Nylon 4-0',
-    'Prolene 0',
-    'Prolene 2-0',
-    'Prolene 3-0',
-    'Prolene 4-0',
-    'Silk Ties 0',
-    'Silk Ties 2-0',
-    'Silk Ties 3-0',
-    'Silk 0',
-    'Silk 2-0',
-    'Silk 3-0',
-    'Stratafix 1',
-    'Stratafix 0',
-    'Stratafix 2-0',
-    'Stratafix 3-0',
-    'Stratafix 4-0',
-    'Vicryl 0',
-    'Vicryl 2-0',
-    'Vicryl 3-0',
-    'Vicryl 4-0',
-  ]
+    'Ethibond #5', 'Ethibond #2',
+    'Monocryl 2-0', 'Monocryl 3-0', 'Monocryl 4-0',
+    'PDS 1', 'PDS 0', 'PDS 2-0', 'PDS 3-0',
+    'Nylon 0', 'Nylon 2-0', 'Nylon 3-0', 'Nylon 4-0',
+    'Prolene 0', 'Prolene 2-0', 'Prolene 3-0', 'Prolene 4-0',
+    'Silk Ties 0', 'Silk Ties 2-0', 'Silk Ties 3-0',
+    'Silk 0', 'Silk 2-0', 'Silk 3-0',
+    'Stratafix 1', 'Stratafix 0', 'Stratafix 2-0', 'Stratafix 3-0', 'Stratafix 4-0',
+    'Vicryl 0', 'Vicryl 2-0', 'Vicryl 3-0', 'Vicryl 4-0',
+  ];
+
+  readonly NEEDLE_OPTIONS: string[] = [
+    'SH', 'CT-1', 'CT-2', 'CT-3',
+    'RB-1', 'RB-2', 'PS-2', 'FS-2',
+    'UR-6', 'FSLX', 'V-34', 'V-20',
+  ];
 
   constructor(
     private fb: FormBuilder,
@@ -268,7 +302,7 @@ export class PreferenceCardDialogComponent {
       antibiotics: [''],
       instrumentsText: [''],
       onMayoText: [''],
-      sutures: [[]],
+      sutures: this.fb.array([]), // New form array
       notes: [''],
     });
 
@@ -301,6 +335,27 @@ export class PreferenceCardDialogComponent {
         sutures: (data.card.sutures ?? []),
         notes: data.card.notes,
       });
+
+      // clear existing rows then load sutures
+      this.suturesArray.clear(); 
+
+      // Backwards compatible: if older data had sutures: string[]
+      const suturesAny: any = (data.card as any).sutures ?? [];
+
+      if (Array.isArray(suturesAny) && suturesAny.length > 0 && typeof suturesAny[0] === 'string') {
+        // Old format: ["Vicryl 2-0" ...]
+        for (const s of suturesAny as string []) {
+          this.suturesArray.push(this.createSutureRow({ suture: s, needle: '', qty:1 }));
+        }
+      } else {
+        //new format: [{suture, needle, qty, notes}]
+        for (const row of (data.card.sutures ?? [])) {
+          this.suturesArray.push(this.createSutureRow(row));
+        }
+      }
+
+      //optional: ensure at least one row exists if you want
+      // if (this.suturesArray.length === 0) this.addSutureRow();
     }
 
     // Apply locks (scoped routes)
@@ -369,6 +424,17 @@ export class PreferenceCardDialogComponent {
       .map((x: string) => x.trim())
       .filter((x: string) => !!x);
 
+       // add suture
+    const sutures = this.suturesArray.controls
+      .map(ctrl => ctrl.value)
+      .map((r: any) => ({
+        suture: (r.suture ?? '').trim(),
+        needle: (r.needle ?? '').trim(),
+        qty: r.qty ?? undefined,
+        notes: (r.notes ?? '').trim() || undefined,
+      }))
+      .filter(r => r.suture && r.needle);
+
     // Get procedure name for display
     const proc = this.data.procedures.find(p => p.id === v.procedureId);
 
@@ -382,9 +448,10 @@ export class PreferenceCardDialogComponent {
       antibiotics: v.antibiotics ?? '',
       instruments,
       onMayo,
-      sutures: (v.sutures ?? []),
+      sutures,
       notes: v.notes ?? '',
     } satisfies PreferenceCard);
+
   }
 }
 

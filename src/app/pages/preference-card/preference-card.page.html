@@ -191,9 +191,17 @@
         // Sutures
         <div class="section">
           <div class="label">Sutures</div>
-          <mat-chip-set>
-            <mat-chip *ngFor="let s of (c.sutures ?? [])">{{ s }}</mat-chip>
+          <div class="value" *ngIf="(c.sutures ?? []).length === 0">-</div>
+
+          <mat-chip-set *ngIf="(c.sutures ?? []).length > 0">
+            <mat-chip *ngFor="let s of (c.sutures ?? [])">
+              {{ s.suture }} * {{ s.needle }}<span *ngIf="s.qty"> * x{{ s.qty }}</span>
+            </mat-chip>
           </mat-chip-set>
+
+          <div class="value" *ngFor="let s of (c.sutures ?? [])">
+            <span *ngIf="s.notes">({{ s.notes }})</span>
+          </div>
         </div>
       
         <div class="section">
