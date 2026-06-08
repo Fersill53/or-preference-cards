@@ -234,18 +234,19 @@ export class SurgeonsPage implements OnDestroy {
   ) {
     this.specialties = this.data.getSpecialties();
 
-    this.sub.add(
-      this.data.changed$.subscribe(() => {
-        this.loadSurgeons();
-      })
-    )
-
     this.route.paramMap.subscribe(pm => {
       this.specialtyId = pm.get('specialtyId');
       this.configureHeader();
       this.loadSurgeons();
       this.manageMode = false;
     });
+
+      this.sub.add(
+      this.data.changed$.subscribe(() => {
+        this.loadSurgeons();
+      })
+    );
+
   }
 
   private configureHeader() {
