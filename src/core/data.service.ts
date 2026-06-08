@@ -205,6 +205,7 @@ private notifyChanged() {
 
   private writeDb(db: Db) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    this.notifyChanged();
   }
 
   private newId(prefix: string) {
