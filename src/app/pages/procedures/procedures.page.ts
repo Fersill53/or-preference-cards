@@ -520,6 +520,7 @@ export class ProceduresPage {
 // Changes 4/20/26
 
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -693,7 +694,8 @@ export class ProceduresPage implements OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private data: DataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.specialties = this.data.getSpecialties();
     this.surgeonsAll = this.data.getAllSurgeons();
@@ -743,6 +745,8 @@ export class ProceduresPage implements OnDestroy {
       surgeonName: this.data.getSurgeonName(p.surgeonId),
       specialtyName: this.data.getSpecialtyName(p.specialtyId),
     }));
+
+    this.cdr.detectChanges();
   }
 
   toggleManage() {

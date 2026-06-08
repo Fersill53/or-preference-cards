@@ -90,6 +90,7 @@ export class SurgeonsPage {
 */
 
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -230,7 +231,8 @@ export class SurgeonsPage implements OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private data: DataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.specialties = this.data.getSpecialties();
 
@@ -263,6 +265,7 @@ export class SurgeonsPage implements OnDestroy {
     this.surgeons = this.specialtyId
       ? this.data.getSurgeonsBySpecialty(this.specialtyId)
       : this.data.getAllSurgeons();
+    this.cdr.detectChanges();
   }
 
   toggleManage() {

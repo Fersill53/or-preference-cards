@@ -78,6 +78,7 @@ export class PreferenceCardPage {
 */
 
 import { Component, Inject, OnDestroy } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -511,7 +512,8 @@ export class PreferenceCardPage implements OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private data: DataService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) {
     this.specialties = this.data.getSpecialties();
     this.surgeons = this.data.getAllSurgeons();
@@ -545,6 +547,8 @@ export class PreferenceCardPage implements OnDestroy {
       specialtyName: this.data.getSpecialtyName(c.specialtyId),
       surgeonName: this.data.getSurgeonName(c.surgeonId),
     }));
+
+    this.cdr.detectChanges();
   }
 
   toggleManage() {
