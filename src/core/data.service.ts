@@ -91,6 +91,7 @@ export class DataService {
 }
 */
 
+import { Subject } from 'rxjs';
 
 import { Injectable } from '@angular/core';
 import { PreferenceCard, Procedure, Specialty, Surgeon } from './models';
@@ -106,6 +107,13 @@ const STORAGE_KEY = 'or-guide-db-v1';
 
 @Injectable({ providedIn: 'root' })
 export class DataService {
+
+private readonly changedSubject = new Subject<void>();
+  readonly changed$ = this.changedSubject.asObservable();
+
+private notifyChanged() {
+  this.changedSubject.next();
+}
   // ---- Fixed specialties (dashboard) ----
   private defaultSpecialties: Specialty[] = [
     { id: 'ortho', name: 'Orthopedics', icon: 'fitness_center' },
@@ -252,6 +260,7 @@ export class DataService {
     const surgeon: Surgeon = { id: this.newId('surgeon'), ...input };
     db.surgeons = [...db.surgeons, surgeon];
     this.writeDb(db);
+    this.notifyChanged();
     return surgeon;
   }
 
@@ -270,6 +279,7 @@ export class DataService {
     }
 
     this.writeDb(db);
+    this.notifyChanged();
     return updated;
   }
 
@@ -279,6 +289,7 @@ export class DataService {
     db.procedures = db.procedures.filter(p => p.surgeonId !== id);
     db.cards = db.cards.filter(c => c.surgeonId !== id);
     this.writeDb(db);
+    this.notifyChanged();
   }
 
   // -------------------------
@@ -289,6 +300,7 @@ export class DataService {
     const procedure: Procedure = { id: this.newId('proc'), ...input };
     db.procedures = [...db.procedures, procedure];
     this.writeDb(db);
+    this.notifyChanged();
     return procedure;
   }
 
@@ -318,6 +330,7 @@ export class DataService {
     }
 
     this.writeDb(db);
+    this.notifyChanged();
     return updated;
   }
 
@@ -326,6 +339,7 @@ export class DataService {
     db.procedures = db.procedures.filter(p => p.id !== id);
     db.cards = db.cards.filter(c => c.procedureId !== id);
     this.writeDb(db);
+    this.notifyChanged();
   }
 
   // -------------------------
@@ -346,6 +360,7 @@ export class DataService {
       : [...db.cards, card];
 
     this.writeDb(db);
+    this.notifyChanged();
     return card;
   }
 
@@ -353,6 +368,7 @@ export class DataService {
     const db = this.readDb();
     db.cards = db.cards.filter(c => !(c.specialtyId === specialtyId && c.surgeonId === surgeonId && c.procedureId === procedureId));
     this.writeDb(db);
+    this.notifyChanged();
   }
 
   // Optional: easy reset during dev

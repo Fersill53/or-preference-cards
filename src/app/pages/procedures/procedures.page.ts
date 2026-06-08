@@ -519,9 +519,11 @@ export class ProceduresPage {
 
 // Changes 4/20/26
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
+import { Subscription } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -671,7 +673,7 @@ type ProcedureCardItem = Procedure & {
   templateUrl: './procedures.page.html',
   styleUrl: './procedures.page.scss',
 })
-export class ProceduresPage {
+export class ProceduresPage implements OnDestroy {
   specialtyId: string | null = null;
   surgeonId: string | null = null;
 
@@ -685,6 +687,8 @@ export class ProceduresPage {
 
   procedures: ProcedureCardItem[] = [];
 
+  private readonly sub = new Subscription();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -694,6 +698,12 @@ export class ProceduresPage {
     this.specialties = this.data.getSpecialties();
     this.surgeonsAll = this.data.getAllSurgeons();
     this.proceduresAll = this.data.getAllProcedures();
+
+    this.sub.add(
+      this.data.changed$.subscribe(() => {
+        this.loadProcedures();
+      })
+    );
 
     this.route.paramMap.subscribe(pm => {
       this.specialtyId = pm.get('specialtyId');
@@ -850,4 +860,9 @@ export class ProceduresPage {
       this.loadProcedures();
     });
   }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
 }

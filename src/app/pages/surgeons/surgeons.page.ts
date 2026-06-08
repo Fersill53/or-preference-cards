@@ -89,9 +89,11 @@ export class SurgeonsPage {
 }
 */
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+
+import { Subscription } from 'rxjs';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -213,7 +215,7 @@ export class SurgeonDialogComponent {
   templateUrl: './surgeons.page.html',
   styleUrl: './surgeons.page.scss',
 })
-export class SurgeonsPage {
+export class SurgeonsPage implements OnDestroy {
   specialtyId: string | null = null;
   title = 'Surgeons';
   subtitle = 'Select a surgeon.';
@@ -222,6 +224,8 @@ export class SurgeonsPage {
   specialties: Specialty[] = [];
   surgeons: Surgeon[] = [];
 
+  private readonly sub = new Subscription();
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -229,6 +233,12 @@ export class SurgeonsPage {
     private dialog: MatDialog
   ) {
     this.specialties = this.data.getSpecialties();
+
+    this.sub.add(
+      this.data.changed$.subscribe(() => {
+        this.loadSurgeons();
+      })
+    )
 
     this.route.paramMap.subscribe(pm => {
       this.specialtyId = pm.get('specialtyId');
@@ -326,4 +336,8 @@ export class SurgeonsPage {
     this.data.deleteSurgeon(surgeon.id);
     this.loadSurgeons();
   }
+
+    ngOnDestroy() {
+      this.sub.unsubscribe();
+    }
 }

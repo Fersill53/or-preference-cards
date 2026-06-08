@@ -77,7 +77,7 @@ export class PreferenceCardPage {
 }
 */
 
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -95,6 +95,9 @@ import { ReactiveFormsModule, FormBuilder, Validators, FormGroup, FormArray } fr
 
 import { DataService } from '../../../core/data.service';
 import { PreferenceCard, Procedure, Specialty, Surgeon } from '../../../core/models';
+
+import { Subscription } from 'rxjs';
+
 
 type PrefDialogMode = 'add' | 'edit';
 
@@ -306,6 +309,7 @@ export class PreferenceCardDialogComponent {
       notes: [''],
     });
 
+
     // Defaults
     const defaultSpecialty = data.lockedSpecialtyId ?? data.specialties[0]?.id ?? '';
     this.form.patchValue({ specialtyId: defaultSpecialty });
@@ -477,7 +481,10 @@ type CardListItem = PreferenceCard & {
   templateUrl: './preference-card.page.html',
   styleUrl: './preference-card.page.scss',
 })
-export class PreferenceCardPage {
+export class PreferenceCardPage implements OnDestroy {
+
+  private readonly sub = new Subscription();
+
   // Route params: when present -> detail mode
   specialtyId: string | null = null;
   surgeonId: string | null = null;
@@ -514,6 +521,12 @@ export class PreferenceCardPage {
       this.specialtyId = pm.get('specialtyId');
       this.surgeonId = pm.get('surgeonId');
       this.procedureId = pm.get('procedureId');
+
+    this.sub.add(
+      this.data.changed$.subscribe(() => {
+        this.reload();
+      })
+    );
 
       this.manageMode = false;
       this.reload();
@@ -628,4 +641,9 @@ export class PreferenceCardPage {
 
     this.reload();
   }
+
+  ngOnDestroy(): void {
+    this.sub.unsubscribe();
+  }
+
 }
