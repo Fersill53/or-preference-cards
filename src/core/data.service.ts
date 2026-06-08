@@ -93,7 +93,7 @@ export class DataService {
 
 import { Subject } from 'rxjs';
 
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { PreferenceCard, Procedure, Specialty, Surgeon } from './models';
 
 type Db = {
@@ -112,7 +112,9 @@ private readonly changedSubject = new Subject<void>();
   readonly changed$ = this.changedSubject.asObservable();
 
 private notifyChanged() {
-  this.changedSubject.next();
+  this.zone.run(() => {
+    this.changedSubject.next();
+  }); 
 }
   // ---- Fixed specialties (dashboard) ----
   private defaultSpecialties: Specialty[] = [
@@ -162,7 +164,7 @@ private notifyChanged() {
     };
   }
 
-  constructor() {
+  constructor(private zone: NgZone) {
     this.ensureDb();
   }
 
@@ -261,7 +263,6 @@ private notifyChanged() {
     const surgeon: Surgeon = { id: this.newId('surgeon'), ...input };
     db.surgeons = [...db.surgeons, surgeon];
     this.writeDb(db);
-    this.notifyChanged();
     return surgeon;
   }
 
@@ -280,7 +281,6 @@ private notifyChanged() {
     }
 
     this.writeDb(db);
-    this.notifyChanged();
     return updated;
   }
 
@@ -290,7 +290,6 @@ private notifyChanged() {
     db.procedures = db.procedures.filter(p => p.surgeonId !== id);
     db.cards = db.cards.filter(c => c.surgeonId !== id);
     this.writeDb(db);
-    this.notifyChanged();
   }
 
   // -------------------------
@@ -301,7 +300,6 @@ private notifyChanged() {
     const procedure: Procedure = { id: this.newId('proc'), ...input };
     db.procedures = [...db.procedures, procedure];
     this.writeDb(db);
-    this.notifyChanged();
     return procedure;
   }
 
@@ -331,7 +329,6 @@ private notifyChanged() {
     }
 
     this.writeDb(db);
-    this.notifyChanged();
     return updated;
   }
 
@@ -340,7 +337,6 @@ private notifyChanged() {
     db.procedures = db.procedures.filter(p => p.id !== id);
     db.cards = db.cards.filter(c => c.procedureId !== id);
     this.writeDb(db);
-    this.notifyChanged();
   }
 
   // -------------------------
@@ -361,7 +357,6 @@ private notifyChanged() {
       : [...db.cards, card];
 
     this.writeDb(db);
-    this.notifyChanged();
     return card;
   }
 
@@ -369,11 +364,11 @@ private notifyChanged() {
     const db = this.readDb();
     db.cards = db.cards.filter(c => !(c.specialtyId === specialtyId && c.surgeonId === surgeonId && c.procedureId === procedureId));
     this.writeDb(db);
-    this.notifyChanged();
   }
 
   // Optional: easy reset during dev
   resetToSeed(): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.seedDb()));
+    //localStorage.setItem(STORAGE_KEY, JSON.stringify(this.seedDb()));
+    this.writeDb(this.seedDb());
   }
 }
